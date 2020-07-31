@@ -289,14 +289,14 @@ func validateRecordArg(recordPtr interface{}) {
 		panic(fmt.Errorf("airtable type error: recordPtr must point to a struct, got %s", recordKind))
 	}
 
-	// ... which has a field named "Fields" that's a struct
+	// ... which has a field named "Fields" that's a map or a struct
 	fields, ok := record.FieldByName("Fields")
 	if !ok {
 		panic(fmt.Errorf("airtable type error: recordPtr must point to a struct with field 'Fields'"))
 	}
 	fieldsKind := fields.Type.Kind()
-	if fieldsKind != reflect.Struct {
-		panic(fmt.Errorf("airtable type error: recordPtr must point to a struct with field 'Fields' that is a struct, got %s", fieldsKind))
+	if (fieldsKind != reflect.Map) && (fieldsKind != reflect.Struct) {
+		panic(fmt.Errorf("airtable type error: recordPtr must point to a struct with field 'Fields' that is a map or struct, got %s", fieldsKind))
 	}
 
 	// ... and a field named "ID" that's a string
@@ -449,15 +449,15 @@ func validateListArg(listPtr interface{}) {
 		panic(fmt.Errorf("airtable type error: listPtr must point to a slice of structs, got %s", elemKind))
 	}
 
-	// ... the structs have a field named "Fields" that's a struct
+	// ... the structs have a field named "Fields" that's a struct or a map
 	fields, ok := elem.FieldByName("Fields")
 	if !ok {
 		panic(fmt.Errorf("airtable type error: listPtr must point to a slice of structs with field 'Fields'"))
 	}
 
 	fieldsKind := fields.Type.Kind()
-	if fieldsKind != reflect.Struct {
-		panic(fmt.Errorf("airtable type error: listPtr must point to a slice of structs with field 'Fields' that is a struct, got %s", fieldsKind))
+	if (fieldsKind != reflect.Struct) && (fieldsKind != reflect.Map) {
+		panic(fmt.Errorf("airtable type error: listPtr must point to a slice of structs with field 'Fields' that is a struct or a map, got %s", fieldsKind))
 	}
 
 	// ... and a field named "ID" that's a string
