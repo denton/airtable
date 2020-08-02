@@ -554,7 +554,7 @@ func makeJSONBody(recordPtr interface{}) (io.Reader, error) {
 	if err != nil {
 		return nil, err
 	}
-	jsonstr := fmt.Sprintf(`{"fields": %s}`, b)
+	jsonstr := fmt.Sprintf(`{"fields": %s, "typecast":true}`, b)
 	body := strings.NewReader(jsonstr)
 	return body, nil
 }
