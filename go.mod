@@ -1,4 +1,4 @@
-module github.com/brianloveswords/airtable
+module github.com/denton/airtable
 
 go 1.13
 
